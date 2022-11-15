@@ -1,0 +1,156 @@
+body{
+
+	font-family: 'Varela Round', Helvetica, Arial, serif;
+
+
+}
+/* Global Styles*/
+
+
+h4{
+  text-align: center;
+	font-size: 30px	;
+	color: #0B6430;
+  text-decoration: dotted;
+}
+
+.button{
+	font-size: 1rem;
+	color: white;
+	padding: 0.7rem 1.4rem;
+	border: none;
+	background: #0B6430;
+	border-radius: 4px;
+	cursor: pointer;
+  margin-top: 20px;
+}
+
+
+.form-register p {
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+  
+}
+
+.content-registro{
+  margin-top: 40px;
+  width:50%;
+  margin-left: auto;
+	margin-right: auto;
+  max-width: 1170px;
+	padding: 1.5em;   
+  box-shadow: 0 0 20px #0B6430;
+  padding: 1rem;
+  background-color: #ffff;
+}
+
+.content-registro p  {
+  color: #0B6430;
+  text-decoration: none;
+  font-size: 20px;
+}
+.content-registro p a {
+  text-align: center;
+  color: #0B6430;
+  display: flex;
+  justify-content: center;
+
+}
+
+
+
+.content-registro a:hover {
+  color: #2C3238;
+}
+
+/*Form Elements*/
+form {
+    margin: 0;
+    padding: 40px;
+    font-size: 1rem;
+}
+input {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #D3D8DC;
+  outline: 0;
+  background: #fff;
+  padding: 30px 0 4px;
+  margin: 0 0 20px;
+  color: #777B7E;
+  font-size: 20px;
+}
+input:focus {
+  border-color: #7A9D96;
+  color: #2C3238;
+}
+textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #D3D8DC;
+  outline: 0;
+  background: #fff;
+  padding: 20px 0 4px;
+  margin: 0 0 20px;
+  color: #777B7E;
+}
+textarea:focus {
+  border-color: #7A9D96;
+  color: #2C3238;
+}
+button#submit {
+  width: 100%;
+  padding: 20px 0;
+  text-align: center;
+  background: #0B6430;
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  opacity: .8;
+  transition: .35s linear;
+}
+
+button#submit:hover {
+  opacity: 1;
+}
+
+  /*Notifications*/
+.notification {
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.9rem;
+}
+.success {
+  background: #43DC7E;
+  color: white;
+}
+.error {
+  background: #AB3444;
+  color: white;
+  margin-bottom: 20px;
+}
+
+
+
+
+/*Footer*/
+footer{
+  color: white;
+  text-align: center;
+  font-size: .875em;
+  margin-top: 42px;
+}
+
+
+
+/*Media Queries*/
+@media (max-width: 786px) {
+  .main {
+    width: 95%;
+  }
+
+}

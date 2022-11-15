@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/f4af70b015.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Andada+Pro&family=Joan&family=Libre+Baskerville:ital@1&family=Montserrat:wght@400;700&family=Old+Standard+TT&family=Roboto:ital,wght@0,300;1,500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+        {% block css %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'app/css/contacto.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+        {% endblock %}
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            const botonEliminar = (id) => {
+                if(window.confirm("¿Está Seguro De Querer Eliminar El Registro?")){
+                    window.location.href = "/eliminar/"+id;
+                }
+            }
+        </script> 
+        
+    </head>
+    <style>
+        .logo {margin-top: 20px;}
+        .admin-title { display: flex; justify-content: center;}
+        .admin-title img  { width: 50px; margin-left: 15px; margin-top: 25px;}
+        ul { display: flex; justify-content: center;}
+         ul li  {list-style: none; margin: 30px;}
+         ul li  a  {text-decoration: none; margin: 30px; color: #0B6430;}
+         .container .links li i {
+            
+            border: 3px solid silver;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            display: flex;
+            border-color: #0B6430;
+         }
+         .container  i {justify-content: center; font-size: 20px;}
+         .container .links i:hover {  background-color:#08A74A; color: #ffff; transition:all .4s ease-in-out;}
+         .container .links a:hover {  color: #08A74A; transition:all .4s ease-in-out;}
+         h4{color: #0B6430;}
+         h4 span{ color: #08A74A;}
+
+
+    </style>
+    <body>
+        
+
+        <div class="container">
+            <div class="admin-title">
+                <h1 class="logo">Administración NewHelp<span>Notary</span> </h1>
+                <a href="#"><img src="{% static 'app/img/admin.png' %}" alt=""></a>
+            </div>
+
+          
+            <ul class="links">
+                <li class="Reservas"> <h4 class=""><a href="{% url 'listadoreservas' %}"> <i class="fa-solid fa-list"></i> Reservas </a></h4></li>
+                <li class="Home"> <h4 class=""><a href="/"><i class="fa-solid fa-house"></i> Home </a></h4></li>
+                <li> <h4 class=""><a href="{% url 'ListaUsuarios' %}"><i class="fa-solid fa-people-group"></i> Usuarios</a></h4> </li>
+
+            </ul>
+      
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong class="text-dark">{{ message }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <h2>Filtrar Datos</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form  method="POST">{% csrf_token %}
+                            <div class="form-group">
+                               {{myFilter.form}}
+                            </div>
+                            
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block text-white">Filtrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+                <h1>Listado de Usuarios</h1>
+                <div class="table-responsive py-2">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Usuario</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Correo</th>
+                                <th colspan="1">Opciones</th>
+                                <th colspan="1">Opciones</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in usuarios %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{c.username}}</td>
+                                <td>{{c.first_name}}</td>
+                                <td>{{c.last_name}}</td>
+                                <td>{{c.email}}</td>
+                                <td><a href="{% url 'ModificarUsuarios' c.id %}" class="btn btn-info ">Editar </a></td>
+                                <td><a href="#" onclick="EliminarUsuario({{ c.id }})" class="btn btn-danger ">Eliminar</a></td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        {% if messages %}
+
+          {% for m in messages %}
+            <script>
+                    Swal.fire({
+                        "title":"Felicitaciones",
+                        "text":"{{m}}",
+                        "icon":"succes",
+                    })
+            </script>
+             {% endfor %}
+      {% endif %}
+    
+
+        <script>
+            function EliminarUsuario(id){
+                Swal.fire({
+                    "title":"¿Estas seguro?",
+                    "text":"Esta acción no se puede deshacer",
+                    "icon":"question",
+                    "showCancelButton":true,
+                    "cancelButtonText":"No, Cancelar",
+                    "confirmButtonText":"Si, Eliminar",
+                    "reverseButtons":true,
+                    "confirmButtonColor":"#dc3545"
+                })
+                .then (function(result){
+                    if(result.isConfirmed) {
+                        window.location.href = "/EliminarUsuarios/"+id+"/"
+                    }
+                })
+            }
+        </script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    </body>
+</html>

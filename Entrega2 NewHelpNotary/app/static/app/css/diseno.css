@@ -1,0 +1,38 @@
+ 
+ 
+ /* Preguntas Frecuentes */
+
+ .container1{
+  
+    width: 80%;
+    margin: auto;
+    margin-bottom: 4rem;
+  }
+  /* .container1 i {
+  
+    font-size: 50px;
+  }    
+   */
+   .container1 h1 {
+    font-family:sans-serif;
+    margin-top: 20px;
+  
+   }
+  
+   .container1 h3 {
+    margin-top: 20px;
+    font-weight: 600;
+    color: #8a6e4b;
+    font-weight: 800;
+  
+   }
+  .container1 .icono1 {
+    margin-top: 20px;
+  }
+  .container1 .icono1 p{
+    font-weight:500;
+    color: #808080;
+  }
+
+  
+  
