@@ -1,0 +1,52 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+{% endblock %}
+
+
+{% block contenido %}      
+    
+
+<style>
+    h1{margin-top: 50px;}
+    .container4 {  margin-left: 200px; }
+    .container4 {  margin-right: 200px; }
+    .div i { display: flex; justify-content: center; font-size: 50px;  color: #7A7A7A; margin-top: 40px; margin-bottom: 40px;}
+    p{ color: #000000;}
+    .container4 i { margin-right:250px;}
+</style>
+
+<div class="container4">
+        
+    <h1>Documentos entregados en el extranjeros </h1>
+            
+           <!--  <span class="iconos"><i class="fa-solid fa-house-user"></i> </span>   -->
+           <div class="div">
+            <i aria-hidden="true" class="fas fa-plane"></i>
+           </div>
+           <p>Cualquier persona residente en país extranjero, sea chileno o de la nacionalidad del respectivo país, puede otorgar instrumento <br>
+             público o privado respecto de actos o contratos que hayan de tener efecto en Chile. </p>
+             <br>
+
+           <p>Para ello deben concurrir o al Consulado de Chile en el país o ante un notario del lugar. </p>
+              <br>
+           <p>Una vez suscrito y entregadas las copias autorizadas del documento, este debe cumplir con el trámite de Legalización ante el <br>
+             respectivo agente consular y Ministerio de Relaciones Exteriores en Chile</p> 
+             <br>
+            <p>¿ COMO ACREDITA SU IDENTIDAD UN EXTRANJERO ?  </p> <br><br>
+            <p>De acuerdo al artículo 405 del Código Orgánico de Tribunales los extranjeros o chilenos radicados en el extranjero podrán <br>
+                 acreditar su identidad con el pasaporte o con el documento de identificación con que se les permitió su ingreso al país </p>
+                 <br><br><br><br><br><br>
+           
+
+
+    </div>
+      
+        
+
+</div>
+
+
+{% endblock %}

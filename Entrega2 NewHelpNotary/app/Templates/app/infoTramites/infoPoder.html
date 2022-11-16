@@ -1,0 +1,48 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+{% endblock %}
+
+
+{% block contenido %}      
+    
+
+<style>
+    h1{margin-top: 50px;}
+    .container4 {  margin-left: 200px; }
+    .container4 {  margin-right: 200px; }
+    .div i { display: flex; justify-content: center; font-size: 50px;  color: #7A7A7A; margin-top: 40px; margin-bottom: 40px;}
+    p{ color: #000000;}
+    .container4 i { margin-right:250px;}
+</style>
+
+<div class="container4">
+        
+    <h1>PODER GENERAL </h1>
+            
+           <!--  <span class="iconos"><i class="fa-solid fa-house-user"></i> </span>   -->
+           <div class="div">
+            <i aria-hidden="true" class="fas fa-gavel"></i>
+           </div>
+
+           <p>El poder, o mandato general es una enunciación pormenorizada de cada una de las facultades que el mandante confiere al <br>
+             mandatario. </p> <br><br>
+
+           <p> Un dato importante a considerar es que nunca un mandato debe entenderse que contiene más facultades que las que <br> 
+            expresamente se han otorgado. Se otorga por escritura pública.  </p> 
+            
+            
+            <br> <br> <br> <br> <br>           
+           
+             
+
+    </div>
+      
+        
+
+</div>
+
+
+{% endblock %}

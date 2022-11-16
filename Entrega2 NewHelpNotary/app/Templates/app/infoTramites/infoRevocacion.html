@@ -1,0 +1,51 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+{% endblock %}
+
+
+{% block contenido %}      
+    
+
+<style>
+    h1{margin-top: 50px;}
+    .container4 {  margin-left: 200px; }
+    .container4 {  margin-right: 200px; }
+    .div i { display: flex; justify-content: center; font-size: 50px;  color: #7A7A7A; margin-top: 40px; margin-bottom: 40px;}
+    p{ color: #000000;}
+    .container4 i { margin-right:250px;}
+</style>
+
+<div class="container4">
+        
+    <h1>REVOCACIÓN DEL MANDATO </h1>
+            
+           <!--  <span class="iconos"><i class="fa-solid fa-house-user"></i> </span>   -->
+           <div class="div">
+            <i aria-hidden="true" class="fas fa-file-medical-alt"></i>
+           </div>
+
+           <p>Para que quede constancia de ella, y especialmente si el mandato que se revoca se otorgó por escritura pública, debiera ser <br>
+             otorgada de la misma forma. </p> <br><br>
+
+           <p> Es importante que el mandatario revocado tome conocimiento de la revocación lo cual es posible efectuarlo de varias formas de <br>
+             las que se pueda posteriormente acreditar el hecho de la toma de conocimiento. Lo más seguro es a través de una gestión notarial <br>
+              de notificación al revocado.  </p> <br><br>
+            
+            
+            <p>Debe, además, tomarse nota al margen de la escritura de mandato. </p> <br><br>
+
+           <p> Por lo mismo cuando se va a utilizar un mandato es conveniente que se tenga a mano un certificado notarial de la vigencia del <br>
+            poder en cuya virtud se actúa. </p> <br><br><br><br><br><br>
+             
+
+    </div>
+      
+        
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'app/css/contacto.css' %}" type="text/css">
+
+
+{% endblock %}
+
+
+{% block contenido %} 
+
+<div class="contenido">
+    
+    <div class="reservar-wrapper">
+
+
+        
+        <div class="reservar-form">
+            <div class="div" style="display: flex; justify-content: space-between;">
+                       
+                <a class="btn btn-outline-secondary" href="{% url 'listadoreservas' %}">Cancelar</a>
+            </div>
+
+            <h1 class="logo"> Actualizar Reserva <span>Hora</span> </h1>
+
+            <form action="/actualizar/{{ reservas.id }}" method="post">
+                {% csrf_token %}
+                <p class="block"><label for="FechaReserva">Fecha Reserva</label> <input type="datetime"  required class="form-control form-control-lg"  value = {{ fecha }} name="txtfereserva"></p>
+                <p><label for="Nombre">Nombre</label><input type="text"  name="txtnombre" value="{{reservas.nombre}}" placeholder="Nombre"  required class="form-control form-control-lg"></p>
+                <p><label for="Apellido">Apellido</label> <input type="text"  name="txtapellido" value="{{reservas.apellido}}" placeholder="Apellido"  required class="form-control form-control-lg"> </p>
+                <p> <label for="email">Email</label> <input type="email"  name="txtemail"value="{{reservas.correo}}" placeholder="tu@email.cl"  required class="form-control form-control-lg"> </p>
+                <p><label for="telefono">Telefono</label> <input type="number" name="txtelefono"  placeholder="956274248" value="{{reservas.telefono}}" required class="form-control form-control-lg"></p> 
+                <p class=""> <label for="tipoconsulta">Tipo Tramite</label> 
+
+                    <select name="tipoconsulta" required class="form-select form-select-lg" >
+                        <option value="">seleccionar tramite</option>
+                            {% if reservas.tiporeserva == 'MANDATO ESPECIAL' %}
+                                <option value="MANDATO ESPECIAL" selected>MANDATO ESPECIAL</option>
+                            {% else %}
+                                <option value="MANDATO ESPECIAL">MANDATO ESPECIAL</option>
+                            {% endif %}
+
+                            {% if reservas.tiporeserva == 'PODER ESPECIAL' %}
+                                <option value="PODER ESPECIAL" selected>PODER ESPECIAL</option>
+                            {% else %}
+                                <option value="PODER ESPECIAL">PODER ESPECIAL</option>
+                            {% endif %} 
+
+                            {% if reservas.tiporeserva == 'COMPRAVENTA DE UN BIEN RAIZ' %}
+                            <option value="COMPRAVENTA DE UN BIEN RAIZ" selected>COMPRAVENTA DE UN BIEN RAIZ</option>
+                            {% else %}
+                            <option value="COMPRAVENTA DE UN BIEN RAIZ">COMPRAVENTA DE UN BIEN RAIZ</option>
+                            {% endif %}
+
+                            {% if reservas.tiporeserva == 'REVOCACION DEL MANDATO' %}
+                            <option value="REVOCACION DEL MANDATO" selected>REVOCACION DEL MANDATO</option>
+                            {% else %}
+                            <option value="REVOCACION DEL MANDATO">REVOCACION DEL MANDATO</option>
+                            {% endif %}
+
+                            {% if reservas.tiporeserva == 'PROMESA DE VENTA' %}
+                            <option value="PROMESA DE VENTA" selected>PROMESA DE VENTA</option>
+                            {% else %}
+                            <option value="PROMESA DE VENTA">PROMESA DE VENTA</option>
+                            {% endif %}
+
+                            {% if reservas.tiporeserva == 'DOCUMENTOS OTORGADOS EN EL EXTRANJERO' %}
+                            <option value="DOCUMENTOS OTORGADOS EN EL EXTRANJERO" selected>DOCUMENTOS OTORGADOS EN EL EXTRANJERO</option>
+                            {% else %}
+                            <option value="DOCUMENTOS OTORGADOS EN EL EXTRANJERO">DOCUMENTOS OTORGADOS EN EL EXTRANJERO</option>
+                            {% endif %}
+
+                            {% if reservas.tiporeserva == 'IMPUESTOS DE TIMBRE EB PAGARES BANCARIO' %}
+                            <option value="IMPUESTOS DE TIMBRE EB PAGARES BANCARIOS" selected>IMPUESTOS DE TIMBRE EB PAGARES BANCARIOS</option>
+                            {% else %}
+                            <option value="IMPUESTOS DE TIMBRE EB PAGARES BANCARIOS">IMPUESTOS DE TIMBRE EB PAGARES BANCARIOS</option>
+                            {% endif %}
+
+                    </select>
+                    </p>
+                <p><label for="telefono">Total a pagar</label> <input type="number" disabled="" name="txtTotal" id="telefono" placeholder="5000"></p> 
+
+                <p class="block"> <a href="#"><button type="submit" id="btnEnviar" class="button">Guardar datos</button> </a> </p> 
+
+            </form>
+
+        </div>
+    
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

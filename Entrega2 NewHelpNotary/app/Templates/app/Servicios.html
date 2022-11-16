@@ -1,0 +1,68 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+{% endblock %}
+
+
+{% block contenido %}      
+
+<div class="titulo">
+
+    <h2>Servicios</h2>
+    <p>Nuestra Notaria cuenta con una atención cordial , proporcionando espacios para el ingreso a personas con movilidad restringida, sistema de firma electrónica para los documentos <br>
+        privados y públicos, sistema de detección biométrica y siempre tratamos de brindar la mejor atención y orientación a nuestro publico. Si usted desea consultar por algún <br>
+        tramite <span> COMUNICARSE CON NOSOTROS. </span>
+    </p>
+</div>
+
+       
+<div class="container1">
+    <!-- NEWS CARDS -->
+<div class="news-cards">
+    <!-- Ecrituras Publicas -->
+    <div>
+        <i aria-hidden="true" class="fas fa-wheelchair"></i>
+        <h3>Acceso para Personas con Problemas de Movilidad</h3>
+
+    </div>
+
+    <div>
+        <i aria-hidden="true" class="fas fa-ban"></i>
+         <h3>Firma electronica</h3>
+        
+
+    </div>
+
+    <div>
+        <i aria-hidden="true" class="fas fa-stamp"></i>
+        <h3>Verificador de Identidad </h3>
+        >
+    </div>
+
+   <div>
+        <i aria-hidden="true" class="fas fa-book"></i>
+        <h3>Atencion Personalizada y Cordial </h3>     
+      
+  </div>
+  
+ 
+</div>        
+
+</div>
+<!-- TURNOS 2022 IMGAGEN -->
+
+<div class="titulo">
+
+    <h2>Turnos</h2>
+  
+    <p>En Viña del Mar existen 8 notarias, la corte de apelaciones de Valparaiso designa los turnos de atención los días sábados.</p>
+</div>
+
+<div class="container1">
+    <img src="{% static 'app/img/Turnos2022.png' %}" alt="">  
+</div>
+
+
+{% endblock %}
