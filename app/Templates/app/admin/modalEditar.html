@@ -1,0 +1,40 @@
+
+
+{% extends 'app/admin/index.html' %} <!-- Hereda el codigo del index -->
+{% load static %}  <!-- Este codigo permite acceder a la carpeta static -->
+
+
+
+
+{% block contenido %}
+
+<div class="modal-dialog modal-lg" role="document">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 class="modal-title">Editar Reserva de Hora</h2>
+            <button class="close" type="button" aria-dismiss="modal" aria-label="Close" >
+            <span aria-hidden="true">&times;</span>
+            </button>            
+        </div>
+        <div class="modal-body">
+
+            {{form}}
+        </div>
+
+        <div class="modal-footer">
+            <button class=" btn btn-danger" type="button" data-dismiss="modal"> Cancelar</button>
+            <button class=" btn btn-primary" type="submit"> Confirmar</button>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+  {% endblock %}

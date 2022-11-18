@@ -1,0 +1,89 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'app/css/contacto.css' %}" type="text/css">
+<!--  <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+ --><link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
+ 
+
+{% endblock %}
+
+
+{% block contenido %} 
+<script src="{% static '/js/funciones.js' %}?id={{ csrf_token }}"></script>
+
+<script src="{% url 'js-catlog' %}"></script>
+<script src="{% static '/admin/js/core.js' %}"></script>
+
+<style> input[type=text], input[type=email],input[type=date],
+    input[type=number], select {
+    
+        width: 95%;
+        margin-top: 15px;
+
+    }
+    .form-control {
+        width: 95%;
+    }
+    
+    label { color: white;}
+    .datetimeshortcuts{ text-align: center;}
+ 
+    </style>
+
+<div class="contenido">
+    
+    {% if r %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <h5>{{ r }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+       {% if r2 %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <h5>{{ r2 }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+    
+    <div class="reservar-wrapper">
+        
+        <div class="reservar-form">
+            <a class="btn btn-outline-success" href="{% url 'ReservarHora' %}">&#x2190; Volver</a>
+
+
+            <h1 class="logo">Reservar Hora <span>Online</span> </h1>
+
+            <form action="" class="" method="post">
+
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form | crispy }}
+                
+                <br>
+                <p class="block"> <a href="#"><button type="submit" id="btnEnviar" class="button">Pagar ahora</button> </a> </p> 
+
+            </form>
+
+        </div>
+    
+
+
+    </div>
+
+</div>
+
+{% block js %}
+<script src="{% static '/js/funciones.js' %}?id={{ csrf_token }}"></script>
+
+{% endblock %}
+
+
+
+{% endblock %}

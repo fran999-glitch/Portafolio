@@ -1,0 +1,161 @@
+
+{% extends 'app/admin/index.html' %} <!-- Hereda el codigo del index -->
+{% load static %}  <!-- Este codigo permite acceder a la carpeta static -->
+
+
+
+
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+
+
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Lista de Usuarios  </h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Cantidad de usuarios registrados en el sistema </li>
+            </ol>
+            <a class="btn btn-success sm-3" href="{% url 'registroCli' %}" role="button">Agregar Reserva de hora  </a>
+
+
+
+            <div class="row">
+
+                <div class="card-body">
+                            
+                      <div class="row">
+                        <div class="col-md-5">
+                            <h5 >FILTRAR DATOS:</h5>
+                            <hr>
+
+                            <div class="card card-body">
+                                <table class="table table-sm- table-hover">
+
+                                    <form  method="POST">
+                                        
+                                        {% csrf_token %}
+
+                                         {{myFilter.form | crispy }}
+
+                                        <br>
+                                  
+                                        <button type="submit" class="btn btn-primary  btn-sm btn-block" href="">Filtrar</button>
+
+                                        
+                                    </form>
+                                    
+                                    
+                    
+                                </table>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-7">
+                            <h5>USUARIOS</h5>
+                            <hr>
+                            <div class="card card-body">
+                                
+                                <table class="table table-sm table-hover">
+                                    <tr >
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>USUARIO</th>
+                                            <th>NOMBRE</th>
+                                            <th>APELLIDO</th>
+                                            <th>CORREO</th>
+                                            <th colspan="1">EDITAR</th>
+                                            <th colspan="1">BORRAR</th>
+            
+                                        </tr>
+                                    </tr>
+                    
+                                    {% for c in entity %}
+                                        <tr>
+                                            <td>{{c.id}}</td>
+                                            <td>{{c.username}}</td>
+                                            <td>{{c.first_name}}</td>
+                                            <td>{{c.last_name}}</td>
+                                            <td>{{c.email}}</td>
+
+                                            <td><a href="{% url 'ModificarUsuarios' c.id %}" class="btn btn-warning "><i class="fa-solid fa-pen-to-square"> </i>Editar </a></td>
+                                            <td><a href="#" onclick="EliminarUsuario({{ c.id }})" class="btn btn-danger "><i class="fa fa-user-times"></i> Eliminar</a></td>                   
+                                        </tr>
+                                    {% endfor %}
+                                    
+                    
+                            
+                                </table>
+                                <div>
+                                    {% include 'app/paginator.html' %}
+                                </div>
+                    
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+              
+                
+                 
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+
+    {% for m in messages %}
+        <script>
+                Swal.fire({
+                    "title":"Felicitaciones ",
+                    "text":"{{m}}",
+                    "icon":"succes",
+                })
+        </script>
+    {% endfor %}
+
+ {% endif %}
+
+ <script>
+    function EliminarUsuario(id){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"Esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then (function(result){
+            if(result.isConfirmed) {
+                window.location.href = "/EliminarUsuarios/"+id+"/"
+            }
+        })
+    }
+</script>
+
+<div class="modal fade" id="edicion" role="dialog"></div>
+
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+
+    function abrir_modal_edicion(url){
+        $('#edicion').load(url,function() {
+            this.modal('show');
+        });
+    }
+
+
+</script>
+
+{% endblock %}
+
+

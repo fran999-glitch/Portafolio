@@ -1,0 +1,112 @@
+
+{% extends 'app/admin/index.html' %} <!-- Hereda el codigo del index -->
+{% load static %}  <!-- Este codigo permite acceder a la carpeta static -->
+
+
+
+
+{% block contenido %}
+{% load crispy_forms_tags %}
+
+
+
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <div class="card shadow-lg border-0 rounded-lg mt-5">
+                        <div class="card-header"><h3 class="text-center font-weight-light my-4">Registrar Notario</h3>
+                            <div class="card-footer text-center py-3">
+
+                           <a class="btn btn-outline-primary sm-3" href="{% url 'registroCli' %}" role="button">Cliente </a>
+
+                                <a class="btn btn-outline-secondary sm-3" href="{% url 'registroAbogado' %}" role="button">Abogado </a>
+
+                                <a class="btn btn-outline-success sm-3" href="{% url 'registroAdmin' %}" role="button">Administrador </a>
+
+                                <a class="btn btn-outline-danger sm-3" href="{% url 'registroNotario' %}" role="button">Notario </a>
+
+                                <a class="btn btn-outline-warning sm-3" href="{% url 'registroSecretaria' %}" role="button">Secretaria </a>
+
+                                                      
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST">
+								{% csrf_token %}
+                                                    
+                                {{form | crispy}}
+                                                            
+                                
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid"><button type="submit" class="btn btn-danger btn-block" href="{% url 'ListaUsuarios' %}">Registrar Usuario</a></div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-footer text-center py-3">
+                            <div class="small"><a href="#">Have an account? Go to login</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>n>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+
+    {% for m in messages %}
+        <script>
+                Swal.fire({
+                    "title":"Felicitaciones ",
+                    "text":"{{m}}",
+                    "icon":"succes",
+                })
+        </script>
+    {% endfor %}
+
+ {% endif %}
+
+ <script>
+    function EliminarReserva(id){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"Esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then (function(result){
+            if(result.isConfirmed) {
+                window.location.href = "/EliminaReserva/"+id+"/"
+            }
+        })
+    }
+</script>
+
+
+<div class="modal fade" id="edicion" role="dialog"></div>
+
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+
+    function abrir_modal_edicion(url){
+        $('#edicion').load(url,function() {
+            this.modal('show');
+        });
+    }
+
+
+</script>
+
+{% endblock %}
+
+
