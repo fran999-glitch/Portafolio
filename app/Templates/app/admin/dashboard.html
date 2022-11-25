@@ -1,0 +1,227 @@
+
+{% extends 'app/admin/index.html' %} <!-- Hereda el codigo del index -->
+{% load static %}  <!-- Este codigo permite acceder a la carpeta static -->
+
+
+
+
+{% block contenido %}
+
+
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Grafico de Reservas</li>
+            </ol>
+            
+          <div class="d-flex flex-row"> 
+            <div class="w-50 ">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="w-50">
+                <canvas id="myChart2"></canvas>
+            </div>
+          </div>
+              
+            <!-- <a class="btn btn-success sm-3" href="{% url 'ReservarHoraClientesAdmin' %}" role="button">Agregar Reserva de hora  </a>
+
+
+            <div class="row">
+
+                <div class="card-body">
+                    <table id="datatablesSimple">
+
+                        {% if entity %}
+
+                    <table  class="table table-hover text-center">
+                        <tr >
+                            <th>ID</th>
+                            <th>FECHA </th>
+                            <th>HORA </th>
+                            <th>NOMBRE</th>
+                            <th>APELLIDO</th>
+                            <th>EMAIL</th>
+                            <th>TELEFONO</th>
+                            <th>TRAMITE</th>
+                            <th>TOTAL </th>
+                            <th>OPCIONES </th>
+                            <th>OPCIONES </th>
+
+
+                        </tr>
+
+                    {% for x in entity %}    
+                        <tr class="align-middle">
+                            <td>{{ x.id }}</td>
+                            <td>{{ x.fecha }}</td>
+                            <td>{{ x.hora }}</td>
+                            <td>{{ x.nombre }}</td>
+                            <td>{{ x.apellido }}</td>
+                            <td>{{ x.correo }}</td>
+                            <td>{{ x.telefono }}</td>
+                            <td>{{ x.CategoriaTramite }}</td>
+                            <td>{{ x.total }}</td>
+                            <td><a  href="{% url 'modificarModalReservas' x.id %}"class="btn btn-warning  "><i class="fa-solid fa-pen-to-square"> </i> Editar </a></td>
+
+                            <td><a href="#" onclick="EliminarReserva({{ x.id }})" class="btn btn-danger  "><i class="fa fa-user-times"></i>  Eliminar</a></td>
+                            
+
+                        </tr>
+
+                    {% endfor %}
+                        
+                    </table>
+                    <br/>
+                
+                {% else %}
+
+
+                {% endif %}
+
+
+                        </tbody>
+                    </table>
+                    <div>
+                        {% include 'app/paginator.html' %}
+                    </div>
+        
+                </div>
+            </div> -->
+        </div>
+    </main>
+
+<!-- CHART JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+<script src="{% static 'libs/chart.js-4.0.1/chart.js' %}"></script>
+<script src="{% static 'libs/chart.js-4.0.1/chart.umd.js' %}"></script>
+
+
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+        datasets: [{
+          label: '# N° de Reservas Mensuales por año',
+          data: {{ reservas_mensuales_count }},
+          borderWidth: 1,
+          borderColor: 'rgb(75, 192, 192)',
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          customCanvasBackgroundColor: {
+          color: 'lightGreen',
+        }
+        }
+      }
+    });
+
+    const ctx2 = document.getElementById('myChart2');
+  
+    new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+        datasets: [{
+          label: '# N° de Clientes registrados Mensuales por año',
+          data: {{ clientes_mensuales_count }},
+          borderWidth: 1
+        }]
+      },
+      options: {
+        animations: {
+          tension: {
+            duration: 1000,
+            easing: 'linear',
+            from: 1,
+            to: 0,
+            loop: true
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        // layout: {
+        //     padding: 40
+        // }
+      }
+    });
+</script>
+  
+   
+  
+<script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+
+
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+
+    {% for m in messages %}
+        <script>
+                Swal.fire({
+                    "title":"Felicitaciones ",
+                    "text":"{{m}}",
+                    "icon":"succes",
+                })
+        </script>
+    {% endfor %}
+
+ {% endif %}
+
+ <script>
+    function EliminarReserva(id){
+        Swal.fire({
+            "title":"¿Estas seguro?",
+            "text":"Esta acción no se puede deshacer",
+            "icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No, Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then (function(result){
+            if(result.isConfirmed) {
+                window.location.href = "/EliminaReserva/"+id+"/"
+            }
+        })
+    }
+</script>
+
+
+<div class="modal fade" id="edicion" role="dialog"></div>
+
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+
+    function abrir_modal_edicion(url){
+        $('#edicion').load(url,function() {
+            this.modal('show');
+        });
+    }
+
+
+</script>
+
+{% endblock %}
+
+

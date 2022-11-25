@@ -177,7 +177,9 @@ class ReservaDeHora(models.Model):
     fecha = models.DateField(verbose_name='Fecha ')
     hora = models.TimeField(verbose_name='Hora ')
     correo = models.EmailField()
-    telefono = models.CharField(max_length=50)
+    telefono = models.CharField(max_length=9)
+    order_key = models.CharField('numero orden', max_length=200, blank=True)
+    payment_option = models.CharField('Opción de pago', max_length=50, blank=True)
     CategoriaTramite = models.ForeignKey(Categoria, models.DO_NOTHING)
     total = models.IntegerField(default=5000)
 

@@ -1,0 +1,120 @@
+
+{% extends 'app/admin/index.html' %} <!-- Hereda el codigo del index -->
+{% load crispy_forms_tags %} 
+ {% load static %} 
+
+
+ {%block css %}
+
+
+ 
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+  crossorigin="anonymous"
+/>
+
+<link
+  rel="stylesheet"
+  href="{% static 'app/css/diseno.css' %}"
+  type="text/css"
+/>
+<link
+  rel="stylesheet"
+  href="{% static 'app/css/contacto.css' %}"
+  type="text/css"
+/>
+<!--  <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+ --><link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}" />
+
+{% endblock %}
+
+
+
+{% block contenido %}
+<script src="{% static '/js/funciones.js' %}?id={{ csrf_token }}"></script>
+
+<script src="{% url 'js-catlog' %}"></script>
+<script src="{% static '/admin/js/core.js' %}"></script>
+
+
+
+
+<div id="layoutSidenav_content">
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Reserva</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Reserva Hora Cliente</li>
+        </ol>
+        <main>
+            <div class="container-fluid px-4">
+                
+                <section style="background-color: #eee;">
+                    <div class="container my-5 py-5">
+                        <div class="row d-flex justify-content-center">
+                        <div class="">
+                            <div class="card">
+                            <div class="card-body">
+                                <form action="" id="frmReservaCliente" class="row row-cols-2"  method="post">
+                
+                                {% csrf_token %}
+                                
+                                {{ form.media }}
+                                {{ form | crispy }}
+                    
+                                
+                                
+                                <br>
+                                <!-- <p class="block">
+                                    <button type="submit" id="btnEnviar" class="button btnModalPayment">Pagar ahora</button> 
+                            
+                                </p>  -->
+                
+                            </form>
+                            </div>
+                            <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                                
+                                <div class="float-end mt-2 pt-1">
+                                <button type="button" class="btn btn-primary btn-sm">Post comment</button>
+                                <button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </section>
+                
+                    
+    
+            </div>
+        </main>
+        
+    </div>
+</main>
+
+
+
+
+{% block js %}
+<script src="{% static '/js/funciones.js' %}?id={{ csrf_token }}"></script>
+
+<script src="{% static 'app/js/script_csrf.js' %}"></script>
+  
+<!-- Replace "test" with your own sandbox Business account app client ID -->
+<script src="https://www.paypal.com/sdk/js?client-id=Ad8Z5cTpX3ksIzFFJvTcyd7OyTJDwKhAzgFGEWiyPUKJJilPvXBG3qq7AOQo-qUyxlsoy5uJFk4TTz4j&currency=USD"></script>
+
+<!-- BOOSTRAP 5.2 -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+
+
+
+{% endblock %} 
+
+{% endblock %}
+
+    
+    

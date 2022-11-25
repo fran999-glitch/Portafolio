@@ -1,4 +1,4 @@
-
+import re
 from django import forms
 from .models import *
 from django.forms.widgets import PasswordInput, TextInput
@@ -16,25 +16,23 @@ from allauth.account.forms import LoginForm
 
 
 class ReservaDeHoraForm(forms.ModelForm):
-	nombre = forms.CharField(required=True,  widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Ingrese su Nombre', 'autocomplete': 'off'}))
-	apellido = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Ingrese su Apellido', 'autocomplete': 'off'}))
+
+
+	nombre = forms.CharField(required=True,  widget=forms.TextInput(attrs={'placeholder': 'Ingrese su Nombre', 'autocomplete': 'off'}))
+	apellido = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Ingrese su Apellido', 'autocomplete': 'off'}))
 	correo = forms.CharField(required=True, 
 		widget=forms.TextInput(
-			attrs={'class': 'form-control', 'placeholder': 'EMail@gmail.com'}
+			attrs={'placeholder': 'Email@gmail.com'}
 			),
-			validators=[
-				validators.MinLengthValidator(4, message="El E-Mail es demasiado corto"),
-				validators.RegexValidator('^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$', message="El E-Mail ingresado no es válido")
-			],
-			error_messages={'required':'El campo E-Mail está vacío' }
+			# validators=[
+			# 	validators.MinLengthValidator(4, message="El E-Mail es demasiado corto"),
+			# 	validators.RegexValidator('^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$', message="El E-Mail ingresado no es válido")
+			# ],
+			# error_messages={'required':'El campo E-Mail está vacío' }
 		)
-	telefono = forms.CharField(required=True, widget=forms.TextInput(
-			attrs={'class': 'form-control', 'placeholder': 'Teléfono', 'autocomplete':'off'}
-			),
-			validators=[
-                validators.MinLengthValidator(9, message="El Teléfono es demasiado corto"),
-                validators.RegexValidator('^[+0-9 ]*$', message="El Teléfono contiene caracteres inválidos, por favor use sólo números, por ejemplo +5691652132")
-            ]
+	telefono = forms.CharField(required=True, max_length=9,widget=forms.TextInput(
+			attrs={'placeholder': 'Teléfono ej. 916521321', 'autocomplete':'off'}
+			)
 	)	
 
 	total = forms.CharField(required=False, widget=forms.TextInput(attrs={ 'disabled':'disabled', 'placeholder': '5000', 'onkeypress': 'return soloNumeros(event)', 'autocomplete':'off'}))
@@ -51,7 +49,66 @@ class ReservaDeHoraForm(forms.ModelForm):
         }
 
 			
+	def clean_base(self, value, attr):
+		reserva_list = ReservaDeHora.objects.all()
+		if self.instance.pk is not None:
+			reserva_list = reserva_list.exclude(id=self.instance.pk)
+		reserva_list = reserva_list.values_list(attr, flat=True)
+		if value.lower() in reserva_list:
+			msg = f'Este {attr} "{value}" ya se encuentra registrado'
+			raise forms.ValidationError(msg)
+		return value
 
+
+	def clean_nombre(self):
+		nombre = self.cleaned_data.get('nombre')
+		reserva = ReservaDeHora.objects.filter(nombre=nombre)
+		if self.instance.pk is not None:
+			reserva = reserva.exclude(id=self.instance.pk)
+		if reserva.exists():
+			msg = f'Este nombre ya se encuentra registrado'
+			raise forms.ValidationError(msg)
+		patron = "^[a-zA-Z ]+$"
+		if re.search(patron, nombre) == None:
+			msg = 'Solo debe contener letras'
+			raise forms.ValidationError(msg)
+		return nombre
+
+	def clean_apellido(self):
+		apellido = self.cleaned_data.get('apellido')
+		patron = "^[a-zA-Z ]+$"
+		if re.search(patron, apellido) == None:
+			msg = 'Solo debe contener letras'
+			raise forms.ValidationError(msg)
+		return self.clean_base(apellido, 'apellido')
+
+	def clean_correo(self):
+		correo = self.cleaned_data.get('correo')
+		return self.clean_base(correo, 'correo')
+
+	def clean_telefono(self):
+		telefono = self.cleaned_data.get('telefono')
+		# patron = "^\+569[0-9]{8}$"
+		patron = "^[9][0-9]{8}$"
+		# patron = "^\+?[56]{2}?\s?[9]?\s?[0-9]{8}|[9]?\s?[0-9]{8}$"
+		# patron = "/^(\+?56)?(\s?)(0?9)(\s?)[98765432]\d{7}$/"
+		if re.search(patron, telefono) == None:
+			msg = 'Ingrese formato correcto ej: 916521321'
+			raise forms.ValidationError(msg)
+		return self.clean_base(telefono, 'telefono')
+
+
+	def clean_hora(self):
+		hora = self.cleaned_data.get('hora').strftime('%H:%M')
+		fecha = self.cleaned_data.get('fecha')
+		reserva_list = ReservaDeHora.objects.all()
+		if self.instance.pk is not None:
+			reserva_list = reserva_list.exclude(pk=self.instance.pk)
+		reserva_list = reserva_list.values_list('fecha', 'hora')
+		for reserva in reserva_list:
+			if reserva[0] == fecha and reserva[1].strftime('%H:%M') == hora:
+				raise forms.ValidationError('Esta hora ya esta reservada')
+		return hora
 
 
 class ContactoForm(forms.ModelForm):

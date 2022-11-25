@@ -1,8 +1,8 @@
 from tempfile import template
 from django.urls import path
 from . import views
-from .views import home ,Equipo , Tramites , Servicios , PreguntasFrecuentes , ReservarHora , ReservarHoraClientes , Contacto ,listadoreservas,Adminvista,modificarReservas
-from .views import EliminaReserva,modificarModalReservas,ReservarHoraClientesAdmin,ListaUsuarios , ModificarUsuarios ,registroAdmin,registroCli,EliminarUsuarios
+from .views import home ,Equipo , Tramites , Servicios , PreguntasFrecuentes , ReservarHora , ReservarHoraClientes , Contacto, payment_successful, payment_complete, listadoreservas,Adminvista,modificarReservas
+from .views import EliminaReserva,modificarModalReservas,ReservarHoraClientesAdmin,ListaUsuarios , ModificarUsuarios ,registroAdmin,registroCli,EliminarUsuarios, dashboard
 
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
@@ -17,8 +17,18 @@ urlpatterns = [
     path('ReservarHoraClientes',ReservarHoraClientes, name ="ReservarHoraClientes" ),
     path('Contacto',Contacto, name ="Contacto" ),
 
+    # PAYPAL
+    path('payment_complete/<int:pk>/',payment_complete, name='payment_complete' ),
+    path('payment_successful/<slug:order_key>/',payment_successful, name='payment_successful' ),
+
+    # DASHBOARD
+    path('dashboard/',dashboard, name='dashboard' ),
+
     #ADMINISTRACION USUARIOS
     path('Adminvista',Adminvista, name ="Adminvista" ),
+
+    # CRUD ADMIN
+    
 
 
     #CRUD RESERVAS DE HORA 

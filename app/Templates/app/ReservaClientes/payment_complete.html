@@ -1,0 +1,175 @@
+exte{% extends 'app/base.html' %}
+
+{% load static %}
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+<link rel="stylesheet" href="{% static 'app/css/diseno.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'app/css/contacto.css' %}" type="text/css">
+
+
+{% endblock %}
+
+
+{% block contenido %}      
+
+
+
+
+<div class="invoice p-3 mb-3 bg-light">
+
+
+  <div class="row">
+    <!-- accepted payments column -->
+
+    <!-- /.col -->
+    <div class="col-4 border border-dark mx-auto text-center">
+      <h2 class="lead fs-3 fw-bold">Detalle Reserva</h2>
+
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+          <tr>
+            <th >Nombre:</th>
+            <td >{{ reserva.nombre }}</td>
+          </tr>
+          <tr>
+            <th>Apeliido:</th>
+            <td>{{ reserva.apellido }}</td>
+          </tr>
+          <tr>
+            <th>Fecha:</th>
+            <td>{{ reserva.fecha | date:'d/m/Y' }}</td>
+          </tr>
+          <tr>
+            <th>Hora:</th>
+            <td>{{ reserva.hora | time:'P' }}</td>
+          </tr>
+          <tr>
+            <th>Correo:</th>
+            <td>{{ reserva.correo }}</td>
+          </tr>
+          <tr>
+            <th>Teléfono:</th>
+            <td>{{ reserva.telefono }}</td>
+          </tr>
+          <tr>
+            <th>Categoria:</th>
+            <td>{{ reserva.CategoriaTramite }}</td>
+          </tr>
+          <tr>
+            <th>Total:</th>
+            <td>${{ reserva.total }}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div id="paypal-button-container"></div>
+    </div>
+
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+
+
+</div>
+
+{% block js %}
+<script src="{% static '/js/funciones.js' %}?id={{ csrf_token }}"></script>
+
+<script src="{% static 'app/js/script_csrf.js' %}"></script>
+  
+<!-- Replace "test" with your own sandbox Business account app client ID -->
+<script src="https://www.paypal.com/sdk/js?client-id=AQnl113UoM83PantvBkn9DstDPiZLh7EtvqS3-MXiKREXzEPOpsoEqcC4qYcW0HoQp26bu_shOxBoZy6&currency=USD"></script>
+
+
+<script>
+
+    // function initPayPalButton () {
+    //       // PAYPAL
+    //       paypal.Buttons({
+           
+    //         createOrder: (data, actions) => {
+    //             return actions.order.create({
+    //                 purchase_units: [{
+    //                     amount: {
+    //                         // currency_code: "USD",
+    //                         value: '5.33' // Can also reference a variable or function
+    //                     }
+    //                 }]
+    //             });
+    //         },
+    //         onApprove: function (data) {
+    //         var url = ""
+    //         const form = document.querySelector('#frmReservaCliente')
+    //         const parameters = new FormData(form)
+    //         parameters.append('orderID', data.orderID)
+    //         return fetch(url, {
+    //         method: 'POST',
+    //         headers: {
+    //             'X-CSRFToken': csrftoken,
+    //         },
+    //         body: parameters,
+    //         }).then(function () {
+    //         location.href = "";
+    //         })
+    //     }
+    //     }).render('#paypal-button-container');
+    // }
+
+
+  function initPayPalButton () {
+    paypal.Buttons({
+        style: {
+            shape: 'rect',
+            color: 'gold',
+            layout: 'vertical',
+            label: 'paypal',
+        },
+        createOrder: (data, actions) => {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        // currency_code: "USD",
+                        value: '5.33' // Can also reference a variable or function
+                    }
+                }]
+            });
+        },
+        onApprove: function (data) {
+        var url = location.pathname
+        return fetch(url, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            'X-CSRFToken': csrftoken,
+          },
+          body: JSON.stringify({
+            orderID: data.orderID,
+
+            
+          })
+        }).then(function (res) {
+          return res.json()
+        }).then(function (data) {
+          console.log(data);
+          location.href = `/payment_successful/${data.order_key}/`
+        })
+      }
+    }).render('#paypal-button-container');
+  }
+
+
+
+  
+  initPayPalButton();
+
+
+
+
+
+</script>
+{% endblock %} 
+
+
+{% endblock %}
